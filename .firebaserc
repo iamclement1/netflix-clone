@@ -1,7 +1,8 @@
 {
   "projects": {
-    "default": "netflix-clone-36831",
-    "netflix": "netflix-clone-36831"
+    "default": "ntflx-99b6f",
+    "netflix": "netflix-clone-36831",
+    "nflx": "ntflx-99b6f"
   },
   "targets": {},
   "etags": {}
