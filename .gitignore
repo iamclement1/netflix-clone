@@ -23,3 +23,5 @@ dist-ssr
 *.sln
 *.sw?
 src/Request.js
+*.env
+src/firebase.js
