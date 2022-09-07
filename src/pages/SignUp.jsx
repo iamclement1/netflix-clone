@@ -1,8 +1,23 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
+import React, { useState } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
 import Bg from '../assets/bg.jpg'
+import { UserAuth } from '../context/AuthContext'
 
 const SignUp = () => {
+    const [ email, setEmail ] = useState("") 
+    const [ password, setPassword ] = useState("")
+    const {user, signUp} = UserAuth()
+    const navigate = useNavigate()
+
+    const handleSubmit = async (event) => {
+        event.preventDefault()
+        try {
+            await signUp(email, password)
+            navigate('/')
+        } catch (error) {
+            console.log(error)
+        }
+    }
     return (
         <>
             <div className="w-full h-screen">
@@ -16,13 +31,16 @@ const SignUp = () => {
                             <form className="w-full flex flex-col py-4">
                                 <div>
                                     <input type="email" placeholder="Email" autoComplete="Email"
-                                        className="p-3 my-2 bg-gray-700 rounded w-full" />
+                                        className="p-3 my-2 bg-gray-700 rounded w-full"
+                                        onChange={(event) => setEmail(event.target.value)} />
                                 </div>
                                 <div>
                                     <input type="password" placeholder="Password"
-                                        className="p-3 my-2 bg-gray-700 rounded w-full" />
+                                        className="p-3 my-2 bg-gray-700 rounded w-full"
+                                        onChange={(event) => setPassword(event.target.value)} />
                                 </div>
-                                <button className='bg-red-600 py-3 my-6 rounded font-bold'>
+                                <button className='bg-red-600 py-3 my-6 rounded font-bold'
+                                onClick={handleSubmit}>
                                     Sign Up
                                 </button>
                                 <div className="flex items-center justify-between text-sm text-gray-600">
