@@ -25,10 +25,8 @@ const SavedMovies = () => {
     }, [user?.email]);
 
     const movieRef = doc(db, 'users', `${user?.email}`)
-    // took the passedID given to the delete icon
     const deleteMovie = async (passedID) => {
         try {
-            // filter takes array and sets or creates a new one
             const result = movies.filter((item) => item.id !== passedID)
             await updateDoc(movieRef, {
                 savedMovies: result
@@ -51,7 +49,7 @@ const SavedMovies = () => {
                     id={'slider'}
                     className='w-full h-full overflow-x-scroll whitespace-nowrap scroll-smooth scrollbar-hide relative'
                 >
-                    {movies.map((item) => (
+                    {movies?.map((item) => (
                         <div
                             key={item.id}
                             className='w-[160px] sm:w-[200px] md:w-[240px] lg:w-[280px] inline-block cursor-pointer relative p-2'

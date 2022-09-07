@@ -1,20 +1,21 @@
 import { createContext, useContext, useEffect, useState } from 'react';
-import { auth, db } from '../firebase'
+import { auth, db } from '../firebase';
 import {
     createUserWithEmailAndPassword,
     signInWithEmailAndPassword,
     signOut,
-    onAuthStateChanged} from 'firebase/auth'
+    onAuthStateChanged,
+} from 'firebase/auth';
 import { setDoc, doc } from 'firebase/firestore'
 
-const AuthContext = createContext()
+const AuthContext = createContext();
 
-export function AuthContextProvider( { children } ) {
-    const [user, setUser] = useState({})
+export function AuthContextProvider({ children }) {
+    const [user, setUser] = useState({});
 
-    function signUp( email, password) {
-        return createUserWithEmailAndPassword(auth, email, password);
-        setDoc(doc(db, 'user', email), {
+    function signUp(email, password) {
+        createUserWithEmailAndPassword(auth, email, password);
+        setDoc(doc(db, 'users', email), {
             savedMovies: []
         })
     }
@@ -27,29 +28,22 @@ export function AuthContextProvider( { children } ) {
         return signOut(auth);
     }
 
-    // checks if a user is logged in or not
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
             setUser(currentUser);
-        })
+        });
         return () => {
             unsubscribe();
         };
     });
 
     return (
-        <AuthContext.Provider value={{signUp, logIn, logOut, user}}>
-            { children }
+        <AuthContext.Provider value={{ signUp, logIn, logOut, user }}>
+            {children}
         </AuthContext.Provider>
     );
 }
 
 export function UserAuth() {
-    return useContext(AuthContext)
+    return useContext(AuthContext);
 }
-
-
-// this is where all the logics seats: signing in and all
-// signing in and out
-// creating account
-// whenever a user is created we store the user details as an array in firestore
