@@ -1,10 +1,11 @@
 import { createContext, useContext, useEffect, useState } from 'react';
-import { auth } from '../firebase'
+import { auth, db } from '../firebase'
 import {
     createUserWithEmailAndPassword,
     signInWithEmailAndPassword,
     signOut,
     onAuthStateChanged} from 'firebase/auth'
+import { setDoc, doc } from 'firebase/firestore'
 
 const AuthContext = createContext()
 
@@ -13,6 +14,9 @@ export function AuthContextProvider( { children } ) {
 
     function signUp( email, password) {
         return createUserWithEmailAndPassword(auth, email, password);
+        setDoc(doc(db, 'user', email), {
+            savedMovies: []
+        })
     }
 
     function logIn(email, password) {
@@ -48,3 +52,4 @@ export function UserAuth() {
 // this is where all the logics seats: signing in and all
 // signing in and out
 // creating account
+// whenever a user is created we store the user details as an array in firestore
