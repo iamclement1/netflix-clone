@@ -12,11 +12,11 @@ const Movies = ({item}) => {
     // created a movie id reference, grabbing a specific user email
     const movieID = doc(db, 'users', `${user?.email}` )
 
-    const savedMovies = async () => {
+    const savedMovies = () => {
         if(user?.email) {
             setLike(!like)
             setSaved(true)
-            await updateDoc(movieID, {
+            updateDoc(movieID, {
                 savedMovies: arrayUnion({
                     id: item.id,
                     title: item.title,

@@ -20,7 +20,7 @@ const SavedMovies = () => {
 
     useEffect(() => {
         onSnapshot(doc(db, 'users', `${user?.email}`), (doc) => {
-            setMovies(doc.data()?.savedShows);
+            setMovies(doc.data()?.savedMovies);
         });
     }, [user?.email]);
 
